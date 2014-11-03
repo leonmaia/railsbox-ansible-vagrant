@@ -1,6 +1,6 @@
 DEPENDENCIES
   chef-locale
-    git: git://github.com/akitaonrails/chef-locale.git
+    git: git://github.com/leonmaia/chef-locale.git
     revision: fee584b22fd12affc8c79814c915f02124e60713
   lxmx_oh_my_zsh
     git: git://github.com/lxmx/chef-oh-my-zsh.git

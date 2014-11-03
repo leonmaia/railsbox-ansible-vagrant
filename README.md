@@ -30,6 +30,14 @@ cd ruby-2.1.2/
 make
 sudo make install
 ```
+If you are running Ubuntu, check if you have NFS installed on your system:
+```
+dpkg -l | grep nfs-kernel-server
+```
+If not run this:
+```
+apt-get install nfs-kernel-server
+```
 
 *Remember to put these first two lines before the rbenv/rvm load on your zshrc if you are using any of them*
 ```
@@ -45,6 +53,7 @@ vagrant plugin install vagrant-berkshelf
 vagrant plugin install vagrant-omnibus
 
 berks install
+ssh-add
 vagrant up --provision
 ```
 
