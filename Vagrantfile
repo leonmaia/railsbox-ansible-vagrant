@@ -73,6 +73,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # An array of symbols representing groups of cookbook described in the Vagrantfile
   # to skip installing and copying to Vagrant's shelf.
   # config.berkshelf.except = []
+  config.vm.provision :shell, :inline => 'sudo apt-get update'
 
   config.vm.provision :chef_solo do |chef|
     chef.custom_config_path = "Vagrantfile.chef"
