@@ -24,8 +24,8 @@ include_recipe 'redis_2_cookbook'
 include_recipe 'mongodb'
 include_recipe "nodejs::npm"
 include_recipe 'user::data_bag'
-include_recipe "rvm::vagrant"
-include_recipe "rvm::user_install"
+include_recipe "rbenv::vagrant"
+include_recipe "rbenv::user_install"
 include_recipe 'lxmx_oh_my_zsh'
 
 user_account 'vagrant' do
@@ -33,7 +33,7 @@ user_account 'vagrant' do
 end
 
 lxmx_oh_my_zsh_user 'vagrant' do
-  plugins        %w{git ruby rvm}
+  plugins        %w{git ruby rbenv}
   autocorrect    false
   case_sensitive true
 end

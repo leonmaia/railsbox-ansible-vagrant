@@ -109,12 +109,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
           run_state: 'start'
         },
       },
-      rvm: {
+      rbenv: {
         user_installs: [
           {
             user: 'vagrant',
-            upgrade: "head",
-            default_ruby: '2.1.2',
+            rubies: ['2.1.2'],
+            global: '2.1.2',
           }
         ]
       },
@@ -124,7 +124,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       :'oh-my-zsh' => {
         enabled: true,
         theme: "agnoster",
-        plugins: %w{git ruby rvm}
+        plugins: %w{git ruby rbenv}
       }
     }
 
