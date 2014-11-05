@@ -39,12 +39,11 @@ If not run this:
 apt-get install nfs-kernel-server
 ```
 
-*Remember to put these first two lines before the rbenv/rvm load on your zshrc if you are using any of them*
+*put these line on your .zshrc before the rbenv/rvm load*
 ```
-"/opt/chefdk/bin"
-"$HOME/.chefdk/gem/ruby/2.1.0/bin"
+export PATH=/opt/chefdk/bin:"$HOME/.chefdk/gem/ruby/2.1.0/bin":$PATH
 
-"VAGRANT_SYNCED_FOLDER=~/Projects"
+export VAGRANT_SYNCED_FOLDER=~/Projects
 ```
 
 ```
@@ -59,5 +58,3 @@ vagrant up --provision
 
 ## License and Authors
 Author:: Leon Maia (hi@leonmaia.com)
-
-*This is a modified version of the railsbox (https://github.com/akitaonrails/vagrant-railsbox) repository by Fabio Akita (boss@akitaonrails.com)*
