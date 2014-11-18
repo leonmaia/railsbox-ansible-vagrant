@@ -65,7 +65,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Enabling the Berkshelf plugin. To enable this globally, add this configuration
   # option to your ~/.vagrant.d/Vagrantfile file
   config.berkshelf.enabled = true
-
+  Vagrant.configure("2") do |config|
+    config.ssh.private_key_path = "~/.ssh/id_rsa"
+    config.ssh.forward_agent = true
+  end
   # An array of symbols representing groups of cookbook described in the Vagrantfile
   # to exclusively install and copy to Vagrant's shelf.
   # config.berkshelf.only = []
@@ -75,7 +78,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # config.berkshelf.except = []
   config.vm.provision :shell, :inline => 'sudo apt-get update'
 
-  config.vm.provision :chef_solo do |chef|
+    config.vm.provision :chef_solo do |chef|
     chef.custom_config_path = "Vagrantfile.chef"
 
     chef.json = {
@@ -86,14 +89,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         install_flavor: "openjdk",
         jdk_version: "7"
       },
-      mysql: {
-        server_root_password: 'root',
-        server_debian_password: 'root',
-        server_repl_password: 'root',
-      },
       postgresql: {
         pg_hba: [
           {type: 'local', db: 'all', user: 'postgres', addr: nil,            method: 'trust'},
+          {type: 'local', db: 'all', user: 'vagrant',  addr: nil,            method: 'trust'},
           {type: 'local', db: 'all', user: 'all',      addr: nil,            method: 'trust'},
           {type: 'host',  db: 'all', user: 'all',      addr: '127.0.0.1/32', method: 'trust'},
           {type: 'host',  db: 'all', user: 'all',      addr: '::1/128',      method: 'trust'}
@@ -109,22 +108,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
           run_state: 'start'
         },
       },
-      rvm: {
-        user_installs: [
-          {
-            user: 'vagrant',
-            upgrade: "head",
-            default_ruby: '2.1.2',
-          }
-        ]
-      },
       user: {
         users: [ 'vagrant' ],
+      },
+      :vagrant => {
+        :system_chef_solo => '/opt/chef/bin/chef-solo'
       },
       :'oh-my-zsh' => {
         enabled: true,
         theme: "agnoster",
-        plugins: %w{git ruby rvm}
+        plugins: %w{git ruby}
       }
     }
 
