@@ -26,6 +26,6 @@
     - libpq-dev
     - nfs-common
 
-- name: symlink node
-  shell: sudo ln -s /usr/bin/nodejs /usr/bin/node
-  register: result
+# - name: symlink node
+#   shell: sudo ln -s /usr/bin/nodejs /usr/bin/node
+#   register: result

@@ -23,7 +23,26 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   ENV['VAGRANT_SYNCED_FOLDER'] ||= "~/Projects"
   config.vm.synced_folder ENV['VAGRANT_SYNCED_FOLDER'], "/vagrant", type: 'nfs'
 
+  config.vm.provider "virtualbox" do |v|
+    host = RbConfig::CONFIG['host_os']
+
+    if host =~ /darwin/
+      cpus = `sysctl -n hw.ncpu`.to_i
+      mem = `sysctl -n hw.memsize`.to_i / 1024 / 1024 / 4
+    elsif host =~ /linux/
+      cpus = `nproc`.to_i
+      mem = `grep 'MemTotal' /proc/meminfo | sed -e 's/MemTotal://' -e 's/ kB//'`.to_i / 1024 / 4
+    else
+      cpus = 2
+      mem = 1024
+    end
+
+    v.customize ["modifyvm", :id, "--memory", mem]
+    v.customize ["modifyvm", :id, "--cpus", cpus]
+  end
+
   config.vm.provision :ansible do |ansible|
-   ansible.playbook = "playbook.yml"
- end
+    ansible.playbook = "playbook.yml"
+    ansible.verbose ="vv"
+  end
 end
