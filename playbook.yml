@@ -1,7 +1,7 @@
 ---
 - hosts: all
   vars:
-    ruby: ruby-2.1.5
+    ruby: ruby-2.2.0
     root_db_password: password
   tasks:
     - name: make sure the system encoding is utf-8
@@ -11,10 +11,12 @@
 
     - include: tasks/apt.yml
     - include: tasks/mysql.yml
-    # - include: tasks/postgresql.yml
+    - include: tasks/postgresql.yml
     - include: tasks/oh-my-zshell.yml
+    - include: tasks/node.yml
     - include: tasks/ruby.yml
-    # - include: tasks/ember.yml
+    - include: tasks/ember.yml
+    - include: tasks/finetune.yml
 
     - name: bundle install
       shell: 'executable=/bin/zsh chdir=/vagrant . "$HOME/.rvm/scripts/rvm" && rvm use --default {{ ruby }}'
